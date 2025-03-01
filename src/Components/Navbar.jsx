@@ -12,21 +12,17 @@ const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
-    const events = [
-      {
-        name: "Udan",
-        pdfUrl: UDAN2025,
-      },
-    ];
+const events = [
+  {
+    name: "Udan",
+    pdfUrl: "https://drive.google.com/file/d/1Nlb_YXO2WCSGGzm4vFpZopqvBxR_KN2P/view?usp=drive_link",
+  },
+];
 
-  const handleDownload = (pdfUrl, eventName) => {
-    const link = document.createElement("a");
-    link.href = pdfUrl;
-    link.setAttribute("download", `${eventName}_2025.pdf`);
-    document.body.appendChild(link);
-    link.click();
-    link.remove();
+  const handleView = (pdfUrl) => {
+    window.open(pdfUrl, '_blank');
   };
+
 
   useEffect(() => {
     const handleScroll = () => {
@@ -125,7 +121,7 @@ const Navbar = () => {
             <li key={event.name} className="relative group">
               <Link
                 className="text-white transition-all duration-300 uppercase block lg:inline"
-                onClick={() => handleDownload(event.pdfUrl, event.name)}
+                onClick={() => handleView(event.pdfUrl, event.name)}
               >
                 Udan
               </Link>
