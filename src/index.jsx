@@ -7,11 +7,10 @@ import { HashRouter } from 'react-router-dom';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <HashRouter >
+    <HashRouter basename={process.env.PUBLIC_URL}>
       <Suspense fallback={<div>Loading...</div>}>
         <App />
       </Suspense>
     </HashRouter>
   </React.StrictMode>
-);
-// basename={process.env.PUBLIC_URL}
+)
