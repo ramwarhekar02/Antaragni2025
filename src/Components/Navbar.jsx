@@ -15,7 +15,7 @@ const Navbar = () => {
 const events = [
   {
     name: "Udan",
-    pdfUrl: "https://drive.google.com/file/d/1Nlb_YXO2WCSGGzm4vFpZopqvBxR_KN2P/view?usp=drive_link",
+    pdfUrl: "https://drive.google.com/file/d/1V_m_IcpT1exAt2Wtvl_u47U08Cr73dlL/view?usp=sharing",
   },
 ];
 

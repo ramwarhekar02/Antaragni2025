@@ -6,44 +6,28 @@ import newsrclogo from "../assets/Images/Logos/newsrclogo.png";
 import { useLocation } from 'react-router-dom'; 
 
 const Footer = () => {
-  const [userCount, setUserCount] = useState(0);
-  const location = useLocation();
-  const [hasCounted, setHasCounted] = useState(false);
 
+  const [visitorCount, setVisitorCount] = useState('Loading...');
 
-    console.log("Component rendered");
-  
-    useEffect(() => {
-      console.log("hasCounted:", hasCounted);
-  
-      const hasIncremented = localStorage.getItem("userCountIncremented");
-  
-      if (!hasIncremented) {
-        console.log("Counting for route:", location.pathname);
-        setHasCounted(true);
-        setUserCount((prev) => prev + 1);
-        localStorage.setItem("userCountIncremented", "true");
-      }
-    }, [location.pathname]);
-  
-    useEffect(() => {
-      return () => {
-        console.log("Component unmounted, resetting hasCounted");
-        setHasCounted(false);
+  useEffect(() => {
+      const fetchVisitorCount = async () => {
+          try {
+              const response = await fetch('http://localhost:5173/counter.php');
+              if (response.ok) {
+                  const data = await response.text();
+                  setVisitorCount(parseInt(data.trim(), 10) || 0);
+              } else {
+                  console.error('Failed to fetch visitor count');
+                  setVisitorCount('Error');
+              }
+          } catch (error) {
+              console.error('Error fetching visitor count:', error);
+              setVisitorCount('Error');
+          }
       };
-    }, []);
-  
-    useEffect(() => {
-      console.log("NODE_ENV:", process.env.NODE_ENV);
-  
-      if (process.env.NODE_ENV !== "production") {
-        return () => {
-          console.log("Removing userCountIncremented from localStorage");
-          localStorage.removeItem("userCountIncremented");
-        };
-      }
-    }, []);
-  
+
+      fetchVisitorCount();
+  }, []);
 
   return (
     <div className="w-full bg-[#1a1a1a] text-white rounded-t-3xl">
@@ -107,7 +91,7 @@ const Footer = () => {
         </div>
       </div>
       <div className="w-full font-semibold bg-[#1a1a1a] py-2 text-center">
-        <p className="text-2xl text-white">Visitor Count: {userCount}</p>
+        <p className="text-2xl text-white">Visitor Count: {visitorCount}</p>
       </div>
     </div>
   );
